@@ -2,6 +2,9 @@ import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import FeaturesBento from "@/components/FeaturesBento";
 import ProblemSolution from "@/components/ProblemSolution";
+import PricingSection from "@/components/PricingSection";
+import FaqSection from "@/components/FaqSection";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -10,11 +13,9 @@ export default function Home() {
       <HeroSection />
       <ProblemSolution />
       <FeaturesBento />
-      
-      {/* Simple Footer */}
-      <footer className="border-t border-card-border py-8 text-center text-slate-500 text-sm">
-        <p>© {new Date().getFullYear()} AuditAI. All rights reserved.</p>
-      </footer>
+      <PricingSection />
+      <FaqSection />
+      <Footer />
     </main>
   );
 }

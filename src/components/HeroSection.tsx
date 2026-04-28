@@ -69,6 +69,7 @@ export default function HeroSection() {
                 src="/hero-visual.png"
                 alt="AI Data Scanning Visualization"
                 fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
                 className="object-cover mix-blend-lighten opacity-80"
                 priority
               />
