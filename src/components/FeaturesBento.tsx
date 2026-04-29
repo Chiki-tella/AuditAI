@@ -14,7 +14,7 @@ const features = [
     title: "Severity Rankings",
     description: "Every issue is ranked Critical, Warning, or Notice so you know what needs immediate attention.",
     icon: <AlertTriangle className="w-6 h-6" />,
-    className: "md:col-span-1 bg-gradient-to-b from-slate-800 to-card-bg",
+    className: "md:col-span-1 bg-card-bg",
   },
   {
     title: "Anomaly Flagging",
