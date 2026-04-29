@@ -117,9 +117,10 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                       <select 
                         id="concern" 
                         required
+                        defaultValue=""
                         className="px-4 py-3 bg-slate-900/50 border border-card-border rounded-xl text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all appearance-none"
                       >
-                        <option value="" disabled selected>Select a topic</option>
+                        <option value="" disabled>Select a topic</option>
                         <option value="demo">Request a Demo</option>
                         <option value="pricing">Pricing Details</option>
                         <option value="support">Technical Support</option>
