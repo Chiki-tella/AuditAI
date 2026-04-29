@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 export default function CtaSection() {
@@ -19,9 +19,16 @@ export default function CtaSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-6">
-              <Sparkles className="w-4 h-4" />
-              <span>Ready to scale your firm?</span>
+            {/* Social Proof Eyebrow */}
+            <div className="flex items-center justify-center gap-3 mb-8">
+              <div className="flex -space-x-2">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User" className="w-8 h-8 rounded-full border-2 border-[#0b1120] object-cover" />
+                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User" className="w-8 h-8 rounded-full border-2 border-[#0b1120] object-cover" />
+                <img src="https://randomuser.me/api/portraits/men/68.jpg" alt="User" className="w-8 h-8 rounded-full border-2 border-[#0b1120] object-cover" />
+              </div>
+              <span className="text-sm font-medium text-slate-400">
+                Join 200+ forward-thinking firms
+              </span>
             </div>
             
             <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-6">
