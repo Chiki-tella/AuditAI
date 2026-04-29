@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown } from "lucide-react";
+import { Plus } from "lucide-react";
 
 const faqs = [
   {
@@ -57,8 +57,8 @@ export default function FaqSection() {
                 className="w-full px-6 py-5 flex items-center justify-between text-left focus:outline-none"
               >
                 <span className="text-lg font-medium text-white">{faq.question}</span>
-                <ChevronDown 
-                  className={`w-5 h-5 text-slate-400 transition-transform duration-300 ${openIndex === idx ? "rotate-180" : ""}`} 
+                <Plus 
+                  className={`w-5 h-5 transition-all duration-300 ${openIndex === idx ? "rotate-45 text-primary" : "text-slate-400"}`} 
                 />
               </button>
               
