@@ -43,7 +43,7 @@ export default function FeaturesBento() {
         <div className="flex flex-col items-center text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
             Everything You Need for a <br className="hidden md:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Flawless First Pass</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 via-primary to-sky-200">Flawless First Pass</span>
           </h2>
           <p className="text-slate-400 max-w-2xl text-lg">
             AuditAI acts as a tireless junior staffer, reviewing thousands of transactions to surface what actually matters.

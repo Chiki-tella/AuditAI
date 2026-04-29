@@ -10,7 +10,7 @@ export default function ProblemSolution() {
         <div className="flex flex-col items-center text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
             Scale Your Firm, <br className="hidden md:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-primary">Not Your Workload</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 via-primary to-sky-200">Not Your Workload</span>
           </h2>
           <p className="text-slate-400 max-w-2xl text-lg">
             Stop capping your client roster because of manual data review. AuditAI handles the grunt work so your senior accountants can focus on advisory.
