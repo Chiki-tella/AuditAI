@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus } from "lucide-react";
 
@@ -26,6 +26,33 @@ const faqs = [
     answer: "The free trial gives you full access to the core auditing engine for up to 3 complete client file reviews, allowing you to see the accuracy and time-savings firsthand before committing."
   }
 ];
+
+function TypewriterText({ text }: { text: string }) {
+  const [displayedText, setDisplayedText] = useState("");
+
+  useEffect(() => {
+    let i = 0;
+    setDisplayedText("");
+    const intervalId = setInterval(() => {
+      setDisplayedText(text.substring(0, i + 1));
+      i++;
+      if (i >= text.length) {
+        clearInterval(intervalId);
+      }
+    }, 15);
+
+    return () => clearInterval(intervalId);
+  }, [text]);
+
+  return (
+    <span>
+      {displayedText}
+      {displayedText.length < text.length && (
+        <span className="animate-pulse inline-block w-1.5 h-4 ml-1 bg-primary align-middle rounded-full"></span>
+      )}
+    </span>
+  );
+}
 
 export default function FaqSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -71,7 +98,7 @@ export default function FaqSection() {
                     transition={{ duration: 0.3, ease: "easeInOut" }}
                   >
                     <div className="px-6 pb-6 pt-0 text-slate-400 leading-relaxed border-t border-card-border/50 mt-2 pt-4">
-                      {faq.answer}
+                      <TypewriterText text={faq.answer} />
                     </div>
                   </motion.div>
                 )}
