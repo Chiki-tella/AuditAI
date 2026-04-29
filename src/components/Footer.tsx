@@ -66,11 +66,18 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-card-border pt-8 flex flex-col md:flex-row items-center justify-between text-sm text-slate-500">
+        <div className="border-t border-card-border pt-8 flex flex-col md:flex-row items-center justify-between text-sm text-slate-500 mb-16">
           <p>© {new Date().getFullYear()} AuditAI Inc. All rights reserved.</p>
           <div className="flex gap-4 mt-4 md:mt-0">
             <span>Designed for Accounting Professionals</span>
           </div>
+        </div>
+
+        {/* Giant Watermark Text */}
+        <div className="w-full flex justify-center items-end overflow-hidden pb-4 pointer-events-none select-none">
+          <h1 className="text-[18vw] leading-[0.75] font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-sky-300/20 to-transparent">
+            AuditAI
+          </h1>
         </div>
       </div>
     </footer>

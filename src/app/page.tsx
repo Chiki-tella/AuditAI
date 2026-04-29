@@ -4,6 +4,7 @@ import FeaturesBento from "@/components/FeaturesBento";
 import ProblemSolution from "@/components/ProblemSolution";
 import PricingSection from "@/components/PricingSection";
 import FaqSection from "@/components/FaqSection";
+import CtaSection from "@/components/CtaSection";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -15,6 +16,7 @@ export default function Home() {
       <FeaturesBento />
       <PricingSection />
       <FaqSection />
+      <CtaSection />
       <Footer />
     </main>
   );

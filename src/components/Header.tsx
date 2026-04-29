@@ -11,10 +11,12 @@ export default function Header() {
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 lg:px-12 backdrop-blur-md bg-background/50 border-b border-card-border">
-        <Link href="/" className="flex items-center gap-2 text-primary">
-          <Shield className="w-8 h-8 text-primary" />
-          <span className="text-xl font-bold tracking-tight text-foreground">AuditAI</span>
-        </Link>
+        <div className="flex-1 flex justify-start">
+          <Link href="/" className="flex items-center gap-2 text-primary">
+            <Shield className="w-8 h-8 text-primary" />
+            <span className="text-xl font-bold tracking-tight text-foreground">AuditAI</span>
+          </Link>
+        </div>
 
         <nav className="hidden md:flex items-center gap-8 px-8 py-3 bg-card-bg border border-card-border rounded-full backdrop-blur-sm">
           <Link href="#features" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">
@@ -28,8 +30,8 @@ export default function Header() {
           </Link>
         </nav>
 
-        <div className="flex items-center gap-4">
-          <button 
+        <div className="flex-1 flex items-center justify-end gap-4">
+          <button
             onClick={() => setIsContactModalOpen(true)}
             className="hidden md:block text-sm font-medium text-slate-300 hover:text-white transition-colors"
           >
@@ -44,9 +46,9 @@ export default function Header() {
         </div>
       </header>
 
-      <ContactModal 
-        isOpen={isContactModalOpen} 
-        onClose={() => setIsContactModalOpen(false)} 
+      <ContactModal
+        isOpen={isContactModalOpen}
+        onClose={() => setIsContactModalOpen(false)}
       />
     </>
   );
