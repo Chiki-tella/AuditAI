@@ -8,31 +8,31 @@ const features = [
     title: "Duplicate Detection",
     description: "Automatically identifies accidental double-entries across entire fiscal years.",
     icon: <Search className="w-6 h-6" />,
-    className: "md:col-span-2 md:row-span-1 bg-gradient-to-br from-card-bg to-slate-900",
+    className: "md:col-span-2 bg-gradient-to-br from-card-bg to-slate-900",
   },
   {
     title: "Severity Rankings",
     description: "Every issue is ranked Critical, Warning, or Notice so you know what needs immediate attention.",
     icon: <AlertTriangle className="w-6 h-6" />,
-    className: "md:col-span-1 md:row-span-2 bg-gradient-to-b from-slate-800 to-card-bg",
+    className: "md:col-span-1 bg-gradient-to-b from-slate-800 to-card-bg",
   },
   {
     title: "Anomaly Flagging",
     description: "Spots unusual amounts relative to vendor history or budget overruns instantly.",
     icon: <ShieldAlert className="w-6 h-6" />,
-    className: "md:col-span-1 md:row-span-1 bg-card-bg",
+    className: "md:col-span-1 bg-card-bg",
   },
   {
     title: "Universal Parsing",
     description: "Upload CSVs or Excel sheets from QuickBooks, Xero, or any legacy software.",
     icon: <FileSpreadsheet className="w-6 h-6" />,
-    className: "md:col-span-1 md:row-span-1 bg-card-bg",
+    className: "md:col-span-2 bg-card-bg",
   },
   {
     title: "Actionable Reports",
     description: "Export clean, ready-to-share PDFs outlining exactly what your clients need to fix.",
     icon: <FileOutput className="w-6 h-6" />,
-    className: "md:col-span-2 md:row-span-1 bg-gradient-to-r from-slate-900 to-card-bg",
+    className: "md:col-span-3 bg-gradient-to-r from-slate-900 to-card-bg",
   },
 ];
 
