@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Check, CheckCircle2 } from "lucide-react";
+import Link from "next/link";
 
 export default function PricingSection() {
   return (
@@ -29,7 +30,7 @@ export default function PricingSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="p-8 rounded-3xl bg-card-bg border border-card-border flex flex-col h-full"
+            className="p-8 rounded-3xl bg-card-bg border border-card-border flex flex-col h-full hover:-translate-y-2 hover:border-slate-500 transition-all duration-300"
           >
             <div className="mb-8">
               <h3 className="text-2xl font-semibold text-white mb-2">Free Trial</h3>
@@ -57,9 +58,12 @@ export default function PricingSection() {
                 <span>Standard email support</span>
               </li>
             </ul>
-            <button className="w-full py-4 rounded-xl font-medium text-white bg-card-bg border border-card-border hover:bg-slate-800 transition-colors">
+            <Link 
+              href="/signup?plan=free"
+              className="w-full flex items-center justify-center py-4 rounded-xl font-medium text-white bg-card-bg border border-card-border hover:bg-slate-800 transition-colors"
+            >
               Get Started for Free
-            </button>
+            </Link>
           </motion.div>
 
           {/* Pro Tier */}
@@ -68,7 +72,7 @@ export default function PricingSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="p-8 rounded-3xl bg-gradient-to-b from-slate-900 to-slate-950 border border-primary/50 relative flex flex-col h-full shadow-[0_0_30px_rgba(14,165,233,0.15)]"
+            className="p-8 rounded-3xl bg-gradient-to-b from-slate-900 to-slate-950 border border-primary/50 relative flex flex-col h-full shadow-[0_0_30px_rgba(14,165,233,0.15)] hover:-translate-y-2 hover:border-primary transition-all duration-300"
           >
             <div className="absolute top-0 right-8 -translate-y-1/2 px-4 py-1 rounded-full bg-primary text-white text-xs font-bold tracking-wide uppercase">
               Most Popular
@@ -100,9 +104,12 @@ export default function PricingSection() {
                 <span>Priority support</span>
               </li>
             </ul>
-            <button className="w-full py-4 rounded-xl font-medium text-white bg-primary hover:bg-primary-dark transition-all duration-300 shadow-[0_0_15px_rgba(14,165,233,0.3)] hover:shadow-[0_0_25px_rgba(14,165,233,0.5)]">
+            <Link 
+              href="/signup?plan=pro"
+              className="w-full flex items-center justify-center py-4 rounded-xl font-medium text-white bg-primary hover:bg-primary-dark transition-all duration-300 shadow-[0_0_15px_rgba(14,165,233,0.3)] hover:shadow-[0_0_25px_rgba(14,165,233,0.5)]"
+            >
               Upgrade to Pro
-            </button>
+            </Link>
           </motion.div>
         </div>
       </div>
