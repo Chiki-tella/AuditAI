@@ -1,117 +1,156 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowRight, CheckCircle, Clock, ShieldCheck } from "lucide-react";
+import { Sparkles, Shield, LayoutDashboard, FileText, AlertCircle, Users, ArrowRight } from "lucide-react";
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center pt-24 pb-12 overflow-hidden">
-      {/* Background glow effects */}
-      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[120px] -z-10 mix-blend-screen pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-accent/10 rounded-full blur-[100px] -z-10 mix-blend-screen pointer-events-none" />
+    <section className="relative min-h-screen flex flex-col items-center justify-center pt-32 pb-0 overflow-hidden text-center bg-[#020617]">
+      {/* Intense Light Beams (Cyan/Teal) */}
+      <div className="absolute top-[-10%] left-[10%] w-[300px] h-[800px] bg-cyan-500/10 blur-[120px] -rotate-12 pointer-events-none mix-blend-screen" />
+      <div className="absolute top-[-10%] right-[10%] w-[300px] h-[800px] bg-teal-500/10 blur-[120px] rotate-12 pointer-events-none mix-blend-screen" />
+      
+      {/* Central Glow */}
+      <div className="absolute top-[30%] left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-cyan-400/20 blur-[150px] -z-10 pointer-events-none mix-blend-screen" />
 
-      <div className="container mx-auto px-6 lg:px-12">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          
-          {/* Left Column - Copy & CTAs */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="flex flex-col gap-6"
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-card-bg border border-card-border w-fit">
-              <ShieldCheck className="w-4 h-4 text-accent" />
-              <span className="text-xs font-medium text-slate-300 uppercase tracking-wider">AI-Powered Auditing</span>
-            </div>
+      {/* Subtle Grid Background */}
+      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')] [mask-image:linear-gradient(to_bottom,transparent,black,transparent)] -z-20 opacity-50" />
+
+      <div className="container mx-auto px-6 lg:px-12 flex flex-col items-center relative z-10 w-full">
+        
+        {/* Main Headline */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="max-w-5xl"
+        >
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-white mb-6 leading-tight">
+            Your AI Junior <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-cyan-400 to-teal-300 drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]">
+              Auditor On Demand
+            </span>
+          </h1>
+        </motion.div>
+        
+        {/* Subtitle */}
+        <motion.p 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.1 }}
+          className="text-lg md:text-xl text-slate-300 max-w-2xl mb-10 leading-relaxed font-light"
+        >
+          Scale your firm, not your workload. A minimal AI-powered system that scans client bookkeeping data and flags issues before a human ever touches it.
+        </motion.p>
+
+        {/* CTAs */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="flex flex-col sm:flex-row items-center gap-5 mb-24"
+        >
+          <button className="w-full sm:w-auto px-8 py-3.5 text-base font-bold text-slate-950 bg-cyan-400 hover:bg-cyan-300 transition-all duration-300 rounded-full shadow-[0_0_20px_rgba(34,211,238,0.4)] hover:shadow-[0_0_30px_rgba(34,211,238,0.6)] flex items-center justify-center gap-2">
+            Get Started
+            <ArrowRight className="w-4 h-4" />
+          </button>
+          <button className="w-full sm:w-auto px-8 py-3.5 text-base font-medium text-white bg-slate-900/50 backdrop-blur-md border border-slate-700 hover:bg-slate-800 hover:border-slate-500 transition-colors duration-300 rounded-full">
+            Watch Demo
+          </button>
+        </motion.div>
+
+        {/* CSS Mockup Dashboard Visual */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.4 }}
+          className="relative w-full max-w-5xl mx-auto"
+        >
+          {/* Glowing Wave/Electric Effect on top of dashboard */}
+          <div className="absolute -top-[2px] left-1/2 -translate-x-1/2 w-full max-w-4xl h-[4px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent blur-[2px] opacity-80" />
+          <div className="absolute -top-[1px] left-1/2 -translate-x-1/2 w-[80%] h-[1px] bg-gradient-to-r from-transparent via-white to-transparent opacity-90" />
+          <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-[60%] h-[40px] bg-cyan-400/20 blur-[20px]" />
+
+          <div className="relative rounded-t-2xl overflow-hidden border-t border-l border-r border-slate-700/50 bg-[#0f172a]/90 backdrop-blur-2xl shadow-2xl shadow-cyan-500/10 flex flex-col md:flex-row min-h-[400px] md:h-[500px]">
             
-            <h1 className="text-5xl lg:text-7xl font-bold leading-tight tracking-tight text-white">
-              Your AI Junior <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Auditor</span> On Demand
-            </h1>
-            
-            <p className="text-lg text-slate-400 max-w-xl leading-relaxed">
-              Scan client bookkeeping data and flag issues before a human ever touches it. Get a complete first-pass audit in minutes, not hours.
-            </p>
-
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 pt-4">
-              <button className="flex items-center gap-2 px-8 py-4 text-base font-medium text-white bg-primary hover:bg-primary-dark transition-all duration-300 rounded-full shadow-[0_0_20px_rgba(14,165,233,0.3)] hover:shadow-[0_0_30px_rgba(14,165,233,0.5)]">
-                Start Free Trial
-                <ArrowRight className="w-5 h-5" />
-              </button>
-              <button className="flex items-center justify-center px-8 py-4 text-base font-medium text-white bg-card-bg border border-card-border hover:bg-slate-800 transition-colors rounded-full">
-                View Demo
-              </button>
-            </div>
-            
-            <div className="flex items-center gap-6 pt-8 text-sm text-slate-500">
-              <div className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-accent" />
-                <span>No credit card required</span>
+            {/* Sidebar Mockup */}
+            <div className="w-full md:w-64 border-b md:border-b-0 md:border-r border-slate-800/60 p-6 hidden md:block">
+              <div className="flex items-center gap-2 mb-10 text-cyan-400">
+                <Shield className="w-6 h-6" />
+                <span className="font-bold text-lg">AuditAI</span>
               </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-accent" />
-                <span>Setup in 2 minutes</span>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Right Column - Visual & Stat Cards */}
-          <div className="relative w-full aspect-square max-w-[600px] mx-auto">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, delay: 0.2 }}
-              className="relative w-full h-full rounded-3xl overflow-hidden border border-card-border/50 bg-card-bg"
-            >
-              <Image 
-                src="/hero-visual.png"
-                alt="AI Data Scanning Visualization"
-                fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
-                className="object-cover mix-blend-lighten opacity-80"
-                priority
-              />
-            </motion.div>
-
-            {/* Floating Stat Card 1 */}
-            <motion.div 
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="absolute -right-6 top-1/4 p-6 rounded-2xl bg-card-bg/80 backdrop-blur-xl border border-card-border shadow-2xl"
-            >
-              <div className="flex flex-col gap-1">
-                <span className="text-sm text-slate-400">Hours Saved</span>
-                <span className="text-4xl font-bold text-white">400+</span>
-                <span className="text-xs text-accent flex items-center gap-1 mt-1">
-                  <CheckCircle className="w-3 h-3" /> Per month/firm
-                </span>
-              </div>
-            </motion.div>
-
-            {/* Floating Stat Card 2 */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-              className="absolute -left-6 bottom-1/4 p-6 rounded-2xl bg-card-bg/80 backdrop-blur-xl border border-card-border shadow-2xl"
-            >
-              <div className="flex items-start gap-4">
-                <div className="p-3 rounded-full bg-primary/20 text-primary">
-                  <Clock className="w-6 h-6" />
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center gap-3 px-3 py-2.5 bg-slate-800/80 text-white rounded-lg text-sm font-medium border border-slate-700/50">
+                  <LayoutDashboard className="w-4 h-4 text-cyan-400" /> Overview
                 </div>
-                <div className="flex flex-col gap-1">
-                  <span className="text-sm text-slate-400">Audit Speed</span>
-                  <span className="text-2xl font-bold text-white">2 Minutes</span>
-                  <span className="text-xs text-slate-500 mt-1">Avg. file processing</span>
+                <div className="flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-white transition-colors rounded-lg text-sm">
+                  <FileText className="w-4 h-4" /> Transactions
+                </div>
+                <div className="flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-white transition-colors rounded-lg text-sm">
+                  <AlertCircle className="w-4 h-4" /> Anomalies
+                  <span className="ml-auto bg-cyan-500/20 text-cyan-400 text-[10px] px-1.5 py-0.5 rounded-full">12</span>
+                </div>
+                <div className="flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-white transition-colors rounded-lg text-sm">
+                  <Users className="w-4 h-4" /> Clients
                 </div>
               </div>
-            </motion.div>
+            </div>
+
+            {/* Main Content Mockup */}
+            <div className="flex-1 p-6 md:p-10 text-left">
+              <h3 className="text-2xl font-light text-slate-200 mb-2">
+                Welcome To <span className="font-serif italic text-cyan-200">Dashboard</span>
+              </h3>
+              <p className="text-sm text-slate-400 mb-10 max-w-lg">
+                Manage your firm's audits, review high-risk anomalies, and experience the speed of AI bookkeeping.
+              </p>
+              
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                {/* Main Stats Panel */}
+                <div className="lg:col-span-2 bg-[#0b1120] border border-slate-800/80 rounded-xl p-6">
+                  <div className="flex items-center justify-between mb-6">
+                    <h4 className="text-sm font-medium text-slate-300">Audits Processed</h4>
+                    <span className="text-xs text-cyan-400 px-2 py-1 bg-cyan-400/10 rounded">This Month</span>
+                  </div>
+                  <div className="flex items-end gap-4 mb-8">
+                    <div className="text-4xl font-bold text-white tracking-tight">1,245</div>
+                    <div className="text-cyan-400 text-sm font-medium mb-1 flex items-center gap-1">
+                      ↑ 12.5%
+                    </div>
+                  </div>
+                  {/* Mock Bar Chart */}
+                  <div className="flex items-end justify-between h-28 gap-2">
+                    {[30, 45, 25, 60, 40, 75, 100].map((h, i) => (
+                      <div key={i} className="w-full relative group">
+                        <div className="absolute bottom-0 w-full rounded-t-sm bg-gradient-to-t from-cyan-500/10 to-cyan-400/60 transition-all duration-300 group-hover:to-cyan-300" style={{ height: `${h}%` }}></div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Quick Actions Panel */}
+                <div className="bg-[#0b1120] border border-slate-800/80 rounded-xl p-6">
+                  <h4 className="text-sm font-medium text-slate-300 mb-6">Quick Actions</h4>
+                  <div className="flex flex-col gap-3">
+                    <div className="px-4 py-3 bg-slate-800/40 border border-slate-700/50 rounded-lg text-sm text-slate-300 hover:bg-slate-800 hover:text-white cursor-pointer transition-colors flex justify-between items-center">
+                      Run Deep Scan <ArrowRight className="w-3 h-3 opacity-50" />
+                    </div>
+                    <div className="px-4 py-3 bg-slate-800/40 border border-slate-700/50 rounded-lg text-sm text-slate-300 hover:bg-slate-800 hover:text-white cursor-pointer transition-colors flex justify-between items-center">
+                      Review Anomalies <ArrowRight className="w-3 h-3 opacity-50" />
+                    </div>
+                    <div className="px-4 py-3 bg-slate-800/40 border border-slate-700/50 rounded-lg text-sm text-slate-300 hover:bg-slate-800 hover:text-white cursor-pointer transition-colors flex justify-between items-center">
+                      Export Reports <ArrowRight className="w-3 h-3 opacity-50" />
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
           </div>
+        </motion.div>
 
-        </div>
       </div>
     </section>
   );
