@@ -24,28 +24,28 @@ export default function ProblemSolution() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="p-8 rounded-3xl bg-red-950/20 border border-red-900/30 flex flex-col gap-6"
+            className="p-8 rounded-3xl bg-slate-900/40 border border-slate-800 flex flex-col gap-6"
           >
-            <div className="flex items-center gap-3 text-red-400 font-semibold text-lg pb-4 border-b border-red-900/30">
-              <XCircle className="w-6 h-6" />
+            <div className="flex items-center gap-3 text-slate-400 font-medium text-lg pb-4 border-b border-slate-800">
+              <XCircle className="w-5 h-5 opacity-70" />
               The Old Way
             </div>
             
-            <ul className="flex flex-col gap-4 text-slate-300">
+            <ul className="flex flex-col gap-4 text-slate-500">
               <li className="flex items-start gap-3">
-                <span className="text-red-500/50 mt-1">✗</span>
+                <span className="text-slate-600 mt-0.5 font-bold">✕</span>
                 Manually reviewing thousands of rows in Excel sheets.
               </li>
               <li className="flex items-start gap-3">
-                <span className="text-red-500/50 mt-1">✗</span>
+                <span className="text-slate-600 mt-0.5 font-bold">✕</span>
                 Junior staff missing duplicate entries due to fatigue.
               </li>
               <li className="flex items-start gap-3">
-                <span className="text-red-500/50 mt-1">✗</span>
+                <span className="text-slate-600 mt-0.5 font-bold">✕</span>
                 Senior accountants wasting hours verifying basic math.
               </li>
               <li className="flex items-start gap-3">
-                <span className="text-red-500/50 mt-1">✗</span>
+                <span className="text-slate-600 mt-0.5 font-bold">✕</span>
                 Turning away new clients because the team is at capacity.
               </li>
             </ul>
