@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Sparkles, Shield, LayoutDashboard, FileText, AlertCircle, Users, ArrowRight } from "lucide-react";
+import Logo from "./Logo";
 
 export default function HeroSection() {
   return (
@@ -75,9 +76,8 @@ export default function HeroSection() {
             
             {/* Sidebar Mockup */}
             <div className="w-full md:w-64 border-b md:border-b-0 md:border-r border-slate-800/60 p-6 hidden md:block">
-              <div className="flex items-center gap-2 mb-10 text-primary">
-                <Shield className="w-6 h-6" />
-                <span className="font-bold text-lg">AuditAI</span>
+              <div className="mb-10">
+                <Logo />
               </div>
               <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-3 px-3 py-2.5 bg-slate-800/80 text-white rounded-lg text-sm font-medium border border-slate-700/50">

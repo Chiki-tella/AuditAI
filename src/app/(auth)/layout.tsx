@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { Shield } from "lucide-react";
-
+import Logo from "@/components/Logo";
 export default function AuthLayout({
   children,
 }: {
@@ -13,10 +12,9 @@ export default function AuthLayout({
       <div className="absolute -bottom-1/4 right-0 w-[400px] h-[400px] bg-accent/5 rounded-full blur-[100px] -z-10 pointer-events-none" />
 
       <div className="sm:mx-auto sm:w-full sm:max-w-md mb-8">
-        <Link href="/" className="flex items-center justify-center gap-2 text-primary hover:opacity-80 transition-opacity">
-          <Shield className="w-10 h-10 text-primary" />
-          <span className="text-3xl font-bold tracking-tight text-foreground">AuditAI</span>
-        </Link>
+        <div className="flex justify-center">
+          <Logo className="scale-110" />
+        </div>
       </div>
 
       <div className="sm:mx-auto sm:w-full sm:max-w-md">

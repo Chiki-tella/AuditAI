@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { Shield } from "lucide-react";
-
+import Logo from "./Logo";
 export default function Footer() {
   return (
     <footer className="bg-slate-950 border-t border-card-border pt-16 pb-8">
@@ -8,10 +7,9 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           {/* Brand Col */}
           <div className="md:col-span-1">
-            <Link href="/" className="flex items-center gap-2 text-primary mb-4">
-              <Shield className="w-8 h-8 text-primary" />
-              <span className="text-xl font-bold tracking-tight text-foreground">AuditAI</span>
-            </Link>
+            <div className="mb-4">
+              <Logo />
+            </div>
             <p className="text-slate-400 text-sm leading-relaxed mb-6">
               The AI junior auditor that scans client bookkeeping data and flags issues before a human ever touches it.
             </p>

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Shield } from "lucide-react";
+import Logo from "./Logo";
 import ContactModal from "./ContactModal";
 
 export default function Header() {
@@ -12,10 +12,7 @@ export default function Header() {
     <>
       <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 lg:px-12 backdrop-blur-md bg-background/50 border-b border-card-border">
         <div className="flex-1 flex justify-start">
-          <Link href="/" className="flex items-center gap-2 text-primary">
-            <Shield className="w-8 h-8 text-primary" />
-            <span className="text-xl font-bold tracking-tight text-foreground">AuditAI</span>
-          </Link>
+          <Logo />
         </div>
 
         <nav className="hidden md:flex items-center gap-8 px-8 py-3 bg-card-bg border border-card-border rounded-full backdrop-blur-sm">
