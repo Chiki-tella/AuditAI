@@ -3,11 +3,12 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, FileText, AlertCircle, Users, Settings, Search, Bell, Menu, X } from "lucide-react";
+import { LayoutDashboard, FileText, AlertCircle, Users, Settings, Search, Bell, Menu, X, UploadCloud } from "lucide-react";
 import Logo from "@/components/Logo";
 
 const navigation = [
   { name: "Overview", href: "/dashboard", icon: LayoutDashboard },
+  { name: "Upload Data", href: "/upload", icon: UploadCloud },
   { name: "Transactions", href: "/transactions", icon: FileText },
   { name: "Anomalies", href: "/anomalies", icon: AlertCircle, badge: "12" },
   { name: "Clients", href: "/clients", icon: Users },
