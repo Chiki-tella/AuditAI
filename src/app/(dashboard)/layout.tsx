@@ -79,12 +79,16 @@ export default function DashboardLayout({
 
         <div className="p-4 border-t border-slate-800/60">
           <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-slate-900/50 border border-slate-800/80">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-primary to-blue-600 flex items-center justify-center text-white font-bold">
-              JD
+            <div className="w-10 h-10 rounded-full border border-primary/30 overflow-hidden shadow-[0_0_10px_rgba(56,189,248,0.2)]">
+              <img 
+                src="/professional_auditor_profile_1777744975539.png" 
+                alt="Jane Doe" 
+                className="w-full h-full object-cover"
+              />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-white truncate">Jane Doe</p>
-              <p className="text-xs text-slate-500 truncate">Partner</p>
+              <p className="text-sm font-bold text-white truncate">Jane Doe</p>
+              <p className="text-[10px] text-primary/70 font-bold uppercase tracking-widest truncate">Managing Audit Partner</p>
             </div>
           </div>
         </div>
