@@ -85,17 +85,17 @@ export default function TransactionsPage() {
                   <td className="px-6 py-4 font-mono">{txn.amount}</td>
                   <td className="px-6 py-4">
                     {txn.status === "cleared" && (
-                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-400/10 text-emerald-400 border border-emerald-400/20">
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-slate-900/50 text-slate-500 border border-slate-800/80">
                         <CheckCircle2 className="w-3.5 h-3.5" /> Cleared
                       </span>
                     )}
                     {txn.status === "flagged" && (
-                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-rose-400/10 text-rose-400 border border-rose-400/20">
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-primary/20 text-primary border border-primary/30 shadow-[0_0_10px_rgba(14,165,233,0.1)]">
                         <AlertCircle className="w-3.5 h-3.5" /> Flagged
                       </span>
                     )}
                     {txn.status === "pending" && (
-                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-blue-400/10 text-blue-400 border border-blue-400/20">
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-slate-800/50 text-slate-400 border border-slate-700/50">
                         <Clock className="w-3.5 h-3.5" /> Pending
                       </span>
                     )}

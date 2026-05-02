@@ -46,7 +46,7 @@ export default function AnomaliesPage() {
         <div>
           <h1 className="text-3xl font-bold text-white tracking-tight font-heading flex items-center gap-3">
             Anomalies
-            <span className="bg-rose-500/20 text-rose-400 text-sm py-1 px-3 rounded-full font-bold flex items-center gap-1.5">
+            <span className="bg-primary/20 text-primary text-sm py-1 px-3 rounded-full font-bold flex items-center gap-1.5 shadow-[0_0_10px_rgba(14,165,233,0.1)]">
               <AlertTriangle className="w-4 h-4" /> 12 Action Required
             </span>
           </h1>
@@ -90,7 +90,7 @@ export default function AnomaliesPage() {
               <div className="pt-4 border-t border-slate-800/80">
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-slate-400">AI Confidence:</span>
-                  <span className="text-emerald-400 font-bold">{anomaly.confidence}</span>
+                  <span className="text-primary/80 font-bold">{anomaly.confidence}</span>
                 </div>
               </div>
             </div>
@@ -98,7 +98,7 @@ export default function AnomaliesPage() {
             {/* Right Action Panel */}
             <div className="p-6 md:w-2/3 flex flex-col">
               <div className="flex items-start gap-4 mb-4">
-                <div className={`mt-1 p-2 rounded-lg ${anomaly.severity === 'high' ? 'bg-rose-500/10 text-rose-500' : 'bg-amber-500/10 text-amber-500'}`}>
+                <div className={`mt-1 p-2 rounded-lg ${anomaly.severity === 'high' ? 'bg-primary/10 text-primary' : 'bg-slate-800/50 text-slate-400'}`}>
                   <AlertTriangle className="w-5 h-5" />
                 </div>
                 <div>
@@ -110,10 +110,10 @@ export default function AnomaliesPage() {
               </div>
 
               <div className="mt-auto pt-6 flex flex-wrap gap-3">
-                <button className="flex items-center gap-2 px-4 py-2.5 bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500/20 border border-emerald-500/20 rounded-xl transition-colors font-medium text-sm">
+                <button className="flex items-center gap-2 px-4 py-2.5 bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20 rounded-xl transition-colors font-medium text-sm">
                   <Check className="w-4 h-4" /> Approve & Clear
                 </button>
-                <button className="flex items-center gap-2 px-4 py-2.5 bg-rose-500/10 text-rose-500 hover:bg-rose-500/20 border border-rose-500/20 rounded-xl transition-colors font-medium text-sm">
+                <button className="flex items-center gap-2 px-4 py-2.5 bg-slate-900/50 text-slate-500 hover:bg-slate-800 border border-slate-800 rounded-xl transition-colors font-medium text-sm">
                   <X className="w-4 h-4" /> Reject Entry
                 </button>
                 <button className="flex items-center gap-2 px-4 py-2.5 bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700 rounded-xl transition-colors font-medium text-sm">

@@ -25,7 +25,7 @@ const stats = [
     change: "+12.5%", 
     trend: "up", 
     icon: Activity,
-    color: "text-blue-400" 
+    color: "text-primary" 
   },
   { 
     label: "Anomalies Flagged", 
@@ -33,7 +33,7 @@ const stats = [
     change: "-2.4%", 
     trend: "down", 
     icon: AlertTriangle,
-    color: "text-amber-400" 
+    color: "text-primary/70" 
   },
   { 
     label: "Critical Issues", 
@@ -41,7 +41,7 @@ const stats = [
     change: "+1", 
     trend: "up", 
     icon: FileSearch,
-    color: "text-rose-400" 
+    color: "text-primary/50" 
   },
   { 
     label: "Active Clients", 
@@ -49,7 +49,7 @@ const stats = [
     change: "+4", 
     trend: "up", 
     icon: Users,
-    color: "text-emerald-400" 
+    color: "text-primary/90" 
   },
 ];
 
@@ -121,9 +121,7 @@ export default function DashboardOverview() {
               </div>
             </div>
             <div className="mt-4 flex items-center gap-2">
-              <div className={`flex items-center gap-0.5 text-xs font-bold px-1.5 py-0.5 rounded ${
-                stat.trend === "up" ? "text-emerald-400 bg-emerald-400/10" : "text-rose-400 bg-rose-400/10"
-              }`}>
+              <div className="flex items-center gap-0.5 text-xs font-bold px-1.5 py-0.5 rounded bg-primary/10 text-primary">
                 {stat.trend === "up" ? <TrendingUp className="w-3 h-3" /> : <ArrowDownRight className="w-3 h-3" />}
                 {stat.change}
               </div>
@@ -195,7 +193,7 @@ export default function DashboardOverview() {
           <div className="bg-gradient-to-br from-slate-900 to-blue-950/40 border border-blue-900/30 rounded-2xl p-6 relative overflow-hidden">
             <div className="absolute -right-6 -top-6 w-24 h-24 bg-primary/10 blur-3xl rounded-full" />
             <h3 className="text-white font-bold mb-4 flex items-center gap-2">
-              <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+              <CheckCircle2 className="w-5 h-5 text-primary/80" />
               Efficiency Score
             </h3>
             <div className="flex items-center gap-4 mb-6">
@@ -297,14 +295,14 @@ export default function DashboardOverview() {
                   </td>
                   <td className="px-6 py-4">
                     <div className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                      tx.risk === "High" ? "bg-rose-400/10 text-rose-400" : 
-                      tx.risk === "Medium" ? "bg-amber-400/10 text-amber-400" : "bg-emerald-400/10 text-emerald-400"
+                      tx.risk === "High" ? "bg-primary/20 text-primary" : 
+                      tx.risk === "Medium" ? "bg-slate-800/50 text-slate-400" : "bg-slate-900/50 text-slate-500"
                     }`}>
                       {tx.risk}
                     </div>
                   </td>
                   <td className="px-6 py-4">
-                    <span className={`text-[11px] font-medium ${tx.status === "Resolved" ? "text-slate-500" : "text-blue-400"}`}>
+                    <span className={`text-[11px] font-medium ${tx.status === "Resolved" ? "text-slate-600" : "text-primary/70"}`}>
                       {tx.status}
                     </span>
                   </td>
