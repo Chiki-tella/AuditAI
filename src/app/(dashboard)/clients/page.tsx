@@ -125,7 +125,7 @@ export default function ClientsPage() {
                 <div className="flex items-center gap-2">
                   <span className={`text-xl font-bold ${
                     client.healthScore >= 90 ? 'text-primary' : 
-                    client.healthScore >= 70 ? 'text-primary/70' : 'text-slate-400'
+                    client.healthScore >= 70 ? 'text-primary/70' : 'text-danger shadow-[0_0_10px_rgba(244,63,94,0.15)]'
                   }`}>
                     {client.healthScore}
                   </span>
@@ -133,13 +133,13 @@ export default function ClientsPage() {
                 </div>
               </div>
               <div className={`rounded-xl p-3 border ${
-                client.unresolvedAnomalies > 5 ? 'bg-primary/10 border-primary/20' : 
+                client.unresolvedAnomalies > 5 ? 'bg-danger/10 border-danger/20' : 
                 client.unresolvedAnomalies > 0 ? 'bg-slate-800/50 border-slate-700/50' : 
                 'bg-slate-900/50 border-slate-800/50'
               }`}>
                 <p className="text-xs text-slate-500 mb-1">Anomalies</p>
                 <span className={`text-xl font-bold ${
-                  client.unresolvedAnomalies > 5 ? 'text-primary' : 
+                  client.unresolvedAnomalies > 5 ? 'text-danger' : 
                   client.unresolvedAnomalies > 0 ? 'text-slate-300' : 'text-slate-500'
                 }`}>
                   {client.unresolvedAnomalies}

@@ -9,6 +9,8 @@
   --accent-dark: #0891b2; /* cyan-600 */
   --card-bg: rgba(15, 23, 42, 0.6); /* slate-900 with opacity */
   --card-border: rgba(51, 65, 85, 0.5); /* slate-700 with opacity */
+  --danger: #f43f5e; /* rose-500 - high intensity red */
+  --danger-dark: #e11d48; /* rose-600 */
 }
 
 @theme inline {
@@ -18,6 +20,8 @@
   --color-primary-dark: var(--primary-dark);
   --color-accent: var(--accent);
   --color-accent-dark: var(--accent-dark);
+  --color-danger: var(--danger);
+  --color-danger-dark: var(--danger-dark);
   --color-card-bg: var(--card-bg);
   --color-card-border: var(--card-border);
 }

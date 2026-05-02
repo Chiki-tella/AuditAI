@@ -406,7 +406,7 @@ export default function DashboardOverview() {
                   </td>
                   <td className="px-6 py-4">
                     <div className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                      tx.risk === "High" ? "bg-primary/20 text-primary" : 
+                      tx.risk === "High" ? "bg-danger/10 text-danger border border-danger/20 shadow-[0_0_10px_rgba(244,63,94,0.1)]" : 
                       tx.risk === "Medium" ? "bg-slate-800/50 text-slate-400" : "bg-slate-900/50 text-slate-500"
                     }`}>
                       {tx.risk}

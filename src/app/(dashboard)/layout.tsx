@@ -81,7 +81,7 @@ export default function DashboardLayout({
           <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-slate-900/50 border border-slate-800/80">
             <div className="w-10 h-10 rounded-full border border-primary/30 overflow-hidden shadow-[0_0_10px_rgba(56,189,248,0.2)]">
               <img 
-                src="/professional_auditor_profile_1777744975539.png" 
+                src="/avatar.png" 
                 alt="Jane Doe" 
                 className="w-full h-full object-cover"
               />

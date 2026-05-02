@@ -46,13 +46,13 @@ export default function AnomaliesPage() {
         <div>
           <h1 className="text-3xl font-bold text-white tracking-tight font-heading flex items-center gap-3">
             Anomalies
-            <span className="bg-primary/20 text-primary text-sm py-1 px-3 rounded-full font-bold flex items-center gap-1.5 shadow-[0_0_10px_rgba(14,165,233,0.1)]">
+            <span className="bg-danger/10 text-danger text-sm py-1 px-3 rounded-full font-bold flex items-center gap-1.5 border border-danger/20">
               <AlertTriangle className="w-4 h-4" /> 12 Action Required
             </span>
           </h1>
           <p className="text-slate-400 mt-2">Transactions flagged by AuditAI that require your expertise.</p>
         </div>
-        
+
         <div className="flex gap-2">
           <select className="bg-slate-900/50 border border-slate-700 text-slate-300 text-sm rounded-lg px-3 py-2 outline-none focus:border-primary">
             <option>All Clients</option>
@@ -82,11 +82,11 @@ export default function AnomaliesPage() {
                 <span>•</span>
                 <span>{anomaly.date}</span>
               </div>
-              
+
               <h3 className="text-xl font-bold text-white mb-1">{anomaly.amount}</h3>
               <p className="text-slate-300 font-medium mb-1">{anomaly.transaction}</p>
               <p className="text-sm text-primary mb-6">{anomaly.client}</p>
-              
+
               <div className="pt-4 border-t border-slate-800/80">
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-slate-400">AI Confidence:</span>
@@ -98,11 +98,11 @@ export default function AnomaliesPage() {
             {/* Right Action Panel */}
             <div className="p-6 md:w-2/3 flex flex-col">
               <div className="flex items-start gap-4 mb-4">
-                <div className={`mt-1 p-2 rounded-lg ${anomaly.severity === 'high' ? 'bg-primary/10 text-primary' : 'bg-slate-800/50 text-slate-400'}`}>
+                <div className={`mt-1 p-2 rounded-lg ${anomaly.severity === 'high' ? 'bg-danger/10 text-danger border border-danger/20' : 'bg-slate-800/50 text-slate-400 border border-transparent'}`}>
                   <AlertTriangle className="w-5 h-5" />
                 </div>
                 <div>
-                  <h4 className="text-lg font-semibold text-white">{anomaly.issue}</h4>
+                  <h4 className={`text-lg font-semibold ${anomaly.severity === 'high' ? 'text-white' : 'text-slate-200'}`}>{anomaly.issue}</h4>
                   <p className="text-slate-400 text-sm mt-2 leading-relaxed">
                     {anomaly.reasoning}
                   </p>
@@ -113,7 +113,7 @@ export default function AnomaliesPage() {
                 <button className="flex items-center gap-2 px-4 py-2.5 bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20 rounded-xl transition-colors font-medium text-sm">
                   <Check className="w-4 h-4" /> Approve & Clear
                 </button>
-                <button className="flex items-center gap-2 px-4 py-2.5 bg-slate-900/50 text-slate-500 hover:bg-slate-800 border border-slate-800 rounded-xl transition-colors font-medium text-sm">
+                <button className="flex items-center gap-2 px-4 py-2.5 bg-danger/10 text-danger border border-danger/20 rounded-xl transition-colors font-medium text-sm hover:bg-danger/20">
                   <X className="w-4 h-4" /> Reject Entry
                 </button>
                 <button className="flex items-center gap-2 px-4 py-2.5 bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700 rounded-xl transition-colors font-medium text-sm">
@@ -127,7 +127,7 @@ export default function AnomaliesPage() {
           </motion.div>
         ))}
       </div>
-      
+
       <div className="flex justify-center pt-4">
         <button className="px-6 py-3 border border-slate-700 text-slate-300 rounded-full hover:bg-slate-800 hover:text-white transition-all text-sm font-medium">
           Load More Anomalies
