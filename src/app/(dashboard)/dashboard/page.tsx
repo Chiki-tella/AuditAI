@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { 
   BarChart3, 
   TrendingUp, 
@@ -95,6 +96,8 @@ const generatePath = (data: number[], isArea: boolean) => {
 };
 
 export default function DashboardOverview() {
+  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
+  
   return (
     <div className="space-y-8 pb-12">
       {/* Page Header */}
@@ -224,6 +227,21 @@ export default function DashboardOverview() {
                   strokeLinejoin="round"
                 />
 
+                {/* Interactive Hit Zones */}
+                {mockActivityData.map((_, idx) => (
+                  <rect
+                    key={idx}
+                    x={(idx / (mockActivityData.length - 1)) * 240 - 4}
+                    y="0"
+                    width="8"
+                    height="100"
+                    fill="transparent"
+                    onMouseEnter={() => setHoveredIdx(idx)}
+                    onMouseLeave={() => setHoveredIdx(null)}
+                    className="cursor-pointer"
+                  />
+                ))}
+
                 {/* Data Points (Dots) */}
                 {[5, 12, 18, 23].map((idx) => (
                   <motion.circle
@@ -234,10 +252,37 @@ export default function DashboardOverview() {
                     cx={(idx / (mockActivityData.length - 1)) * 240}
                     cy={100 - (mockActivityData[idx] / 100) * 100}
                     r="3"
-                    className="fill-primary stroke-[#020617] stroke-2 shadow-lg"
+                    className={`stroke-[#020617] stroke-2 shadow-lg transition-all ${hoveredIdx === idx ? 'fill-white r-4' : 'fill-primary'}`}
                   />
                 ))}
               </svg>
+
+              {/* Floating Tooltip Overlay */}
+              <AnimatePresence>
+                {hoveredIdx !== null && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10, scale: 0.9 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 10, scale: 0.9 }}
+                    className="absolute z-50 pointer-events-none"
+                    style={{
+                      left: `${(hoveredIdx / (mockActivityData.length - 1)) * 100}%`,
+                      top: `${100 - mockActivityData[hoveredIdx]}%`,
+                      transform: 'translate(-50%, -140%)'
+                    }}
+                  >
+                    <div className="bg-slate-900 border border-slate-700 px-3 py-2 rounded-xl shadow-2xl backdrop-blur-md">
+                      <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Vol. {hoveredIdx + 1} May</p>
+                      <p className="text-sm font-bold text-white flex items-center gap-1.5">
+                        <span className="w-2 h-2 rounded-full bg-primary" />
+                        {mockActivityData[hoveredIdx]}k <span className="text-slate-500 font-normal">TX</span>
+                      </p>
+                    </div>
+                    {/* Tooltip Arrow */}
+                    <div className="w-2 h-2 bg-slate-900 border-r border-b border-slate-700 rotate-45 mx-auto -mt-1" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
           <div className="flex justify-between mt-4 text-[10px] text-slate-600 font-bold uppercase tracking-widest">
