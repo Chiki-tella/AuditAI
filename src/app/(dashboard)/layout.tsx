@@ -27,10 +27,10 @@ export default function DashboardLayout({
     <div className="min-h-screen bg-[#020617] text-slate-300 flex overflow-hidden">
       {/* Background glow effects */}
       <div className="absolute top-[-10%] left-[10%] w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
-      
+
       {/* Mobile Sidebar Overlay */}
       {isSidebarOpen && (
-        <div 
+        <div
           className="fixed inset-0 z-40 bg-black/80 backdrop-blur-sm lg:hidden"
           onClick={() => setIsSidebarOpen(false)}
         />
@@ -58,8 +58,8 @@ export default function DashboardLayout({
                 href={item.href}
                 className={`
                   flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300
-                  ${isActive 
-                    ? "bg-slate-800/80 text-white border border-slate-700/50 shadow-[0_0_15px_rgba(14,165,233,0.1)]" 
+                  ${isActive
+                    ? "bg-slate-800/80 text-white border border-slate-700/50 shadow-[0_0_15px_rgba(14,165,233,0.1)]"
                     : "text-slate-400 hover:text-white hover:bg-slate-800/40 border border-transparent"
                   }
                 `}
@@ -80,9 +80,9 @@ export default function DashboardLayout({
         <div className="p-4 border-t border-slate-800/60">
           <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-slate-900/50 border border-slate-800/80">
             <div className="w-10 h-10 rounded-full border border-primary/30 overflow-hidden shadow-[0_0_10px_rgba(56,189,248,0.2)]">
-              <img 
-                src="/avatar.png" 
-                alt="Jane Doe" 
+              <img
+                src="/avatar.png"
+                alt="Jane Doe"
                 className="w-full h-full object-cover"
               />
             </div>
@@ -99,7 +99,7 @@ export default function DashboardLayout({
         {/* Topbar */}
         <header className="h-20 bg-background/50 backdrop-blur-md border-b border-slate-800/60 flex items-center justify-between px-4 lg:px-10 z-20">
           <div className="flex items-center gap-4">
-            <button 
+            <button
               onClick={() => setIsSidebarOpen(true)}
               className="lg:hidden p-2 text-slate-400 hover:text-white bg-slate-900/50 rounded-lg border border-slate-800"
             >
@@ -107,9 +107,9 @@ export default function DashboardLayout({
             </button>
             <div className="hidden md:flex items-center relative">
               <Search className="w-4 h-4 text-slate-500 absolute left-3" />
-              <input 
-                type="text" 
-                placeholder="Search transactions, clients..." 
+              <input
+                type="text"
+                placeholder="Search transactions, clients..."
                 className="w-80 bg-slate-900/50 border border-slate-800 rounded-full py-2 pl-10 pr-4 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all"
               />
             </div>
