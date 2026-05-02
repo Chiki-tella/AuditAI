@@ -1,7 +1,18 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
+  const router = useRouter();
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Simulate login and redirect
+    router.push("/dashboard");
+  };
+
   return (
     <>
       <div className="mb-8 text-center">
@@ -14,7 +25,7 @@ export default function LoginPage() {
         </p>
       </div>
 
-      <form className="space-y-6" action="#" method="POST">
+      <form className="space-y-6" onSubmit={handleSubmit}>
         <div>
           <label htmlFor="email" className="block text-sm font-medium text-slate-300">
             Work Email

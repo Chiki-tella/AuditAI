@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, ArrowLeft, CreditCard, Lock, CheckCircle2 } from "lucide-react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { Suspense } from "react";
 
 function SignupForm() {
@@ -11,6 +11,7 @@ function SignupForm() {
   const plan = searchParams.get("plan");
   const isPro = plan === "pro";
   
+  const router = useRouter();
   const [currentStep, setCurrentStep] = useState(1);
   const totalSteps = isPro ? 3 : 1;
 
@@ -19,8 +20,8 @@ function SignupForm() {
     if (currentStep < totalSteps) {
       setCurrentStep(s => s + 1);
     } else {
-      // Simulate form submission
-      alert(`Registration complete for ${isPro ? 'Pro' : 'Free'} plan!`);
+      // Simulate form submission and redirect
+      router.push("/dashboard");
     }
   };
 
