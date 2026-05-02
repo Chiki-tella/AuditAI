@@ -61,6 +61,39 @@ const recentAnomalies = [
   { id: "TX-8621", client: "Starlight Retail", amount: "$3,400.00", type: "Duplicate Transaction", risk: "Medium", status: "Pending" },
 ];
 
+const mockActivityData = [
+  45, 52, 48, 61, 55, 67, 72, 65, 58, 63, 75, 82, 
+  88, 92, 85, 78, 80, 95, 100, 92, 88, 75, 62, 55
+];
+
+// Helper to generate a smooth SVG path (Cubic Bezier)
+const generatePath = (data: number[], isArea: boolean) => {
+  if (data.length === 0) return "";
+  const width = 240;
+  const height = 100;
+  
+  const points = data.map((val, i) => ({
+    x: (i / (data.length - 1)) * width,
+    y: height - (val / 100) * height
+  }));
+
+  let d = `M ${points[0].x} ${points[0].y}`;
+  
+  for (let i = 0; i < points.length - 1; i++) {
+    const cp1x = points[i].x + (points[i+1].x - points[i].x) / 2;
+    const cp1y = points[i].y;
+    const cp2x = points[i].x + (points[i+1].x - points[i].x) / 2;
+    const cp2y = points[i+1].y;
+    d += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${points[i+1].x} ${points[i+1].y}`;
+  }
+
+  if (isArea) {
+    d += ` L ${width} ${height} L 0 ${height} Z`;
+  }
+  
+  return d;
+};
+
 export default function DashboardOverview() {
   return (
     <div className="space-y-8 pb-12">
@@ -142,7 +175,7 @@ export default function DashboardOverview() {
           <div className="flex items-center justify-between mb-8">
             <div>
               <h3 className="text-lg font-bold text-white">Audit Processing Activity</h3>
-              <p className="text-sm text-slate-500">Transaction scanning volume across all clients</p>
+              <p className="text-sm text-slate-500">Real-time transaction scanning momentum</p>
             </div>
             <div className="flex items-center gap-2 bg-slate-900/50 p-1 rounded-lg border border-slate-800">
               {["7D", "30D", "90D"].map(range => (
@@ -153,26 +186,59 @@ export default function DashboardOverview() {
             </div>
           </div>
 
-          <div className="h-64 w-full relative flex items-end gap-1.5 pb-2">
+          <div className="h-64 w-full relative">
             {/* Minimalist Grid Lines */}
-            <div className="absolute inset-0 flex flex-col justify-between pt-2 pb-6 pointer-events-none opacity-20">
-              {[1, 2, 3, 4].map(i => <div key={i} className="w-full h-[1px] bg-slate-700" />)}
+            <div className="absolute inset-0 flex flex-col justify-between py-2 pointer-events-none opacity-10">
+              {[1, 2, 3, 4].map(i => <div key={i} className="w-full h-[1px] bg-slate-400" />)}
             </div>
 
-            {/* Bars */}
-            {Array.from({ length: 24 }).map((_, i) => (
-              <div key={i} className="flex-1 group relative flex flex-col justify-end">
-                <motion.div 
-                  initial={{ height: 0 }}
-                  animate={{ height: `${Math.random() * 60 + 20}%` }}
-                  transition={{ delay: 0.5 + (i * 0.02), duration: 0.8 }}
-                  className={`w-full rounded-t-sm transition-all group-hover:opacity-100 ${i === 18 ? "bg-primary opacity-100 shadow-[0_0_15px_rgba(14,165,233,0.4)]" : "bg-slate-800 opacity-60"}`}
+            {/* SVG Chart */}
+            <div className="absolute inset-0 pt-2 pb-6">
+              <svg className="w-full h-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 240 100">
+                <defs>
+                  <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.4" />
+                    <stop offset="100%" stopColor="#38bdf8" stopOpacity="0" />
+                  </linearGradient>
+                </defs>
+                
+                {/* Area Fill */}
+                <motion.path
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 1.5, delay: 0.5 }}
+                  d={generatePath(mockActivityData, true)}
+                  fill="url(#chartGradient)"
                 />
-                <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-[10px] text-white px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                  {Math.floor(Math.random() * 50 + 50)}k
-                </div>
-              </div>
-            ))}
+                
+                {/* Line */}
+                <motion.path
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 2, ease: "easeInOut" }}
+                  d={generatePath(mockActivityData, false)}
+                  fill="none"
+                  stroke="#38bdf8"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+
+                {/* Data Points (Dots) */}
+                {[5, 12, 18, 23].map((idx) => (
+                  <motion.circle
+                    key={idx}
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 1.5 + idx * 0.05 }}
+                    cx={(idx / (mockActivityData.length - 1)) * 240}
+                    cy={100 - (mockActivityData[idx] / 100) * 100}
+                    r="3"
+                    className="fill-primary stroke-[#020617] stroke-2 shadow-lg"
+                  />
+                ))}
+              </svg>
+            </div>
           </div>
           <div className="flex justify-between mt-4 text-[10px] text-slate-600 font-bold uppercase tracking-widest">
             <span>01 May</span>
