@@ -1,7 +1,22 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Plus, Search, Building2, Activity, ArrowRight, MoreVertical } from "lucide-react";
+import { 
+  Plus, 
+  Search, 
+  Activity, 
+  ArrowRight, 
+  MoreVertical,
+  Shield,
+  Cpu,
+  Factory,
+  Zap,
+  Utensils,
+  Terminal,
+  Globe,
+  Briefcase,
+  Boxes
+} from "lucide-react";
 
 const clients = [
   {
@@ -13,7 +28,8 @@ const clients = [
     unresolvedAnomalies: 2,
     lastSync: "10 mins ago",
     monthlyVolume: "$2.4M",
-    logoGradient: "from-slate-700 to-slate-900"
+    logoGradient: "from-slate-700 to-slate-900",
+    icon: Shield
   },
   {
     id: "CL-02",
@@ -24,7 +40,8 @@ const clients = [
     unresolvedAnomalies: 8,
     lastSync: "1 hour ago",
     monthlyVolume: "$18.5M",
-    logoGradient: "from-blue-700 to-slate-900"
+    logoGradient: "from-blue-600 to-blue-900",
+    icon: Cpu
   },
   {
     id: "CL-03",
@@ -35,7 +52,8 @@ const clients = [
     unresolvedAnomalies: 0,
     lastSync: "3 hours ago",
     monthlyVolume: "$850K",
-    logoGradient: "from-emerald-700 to-slate-900"
+    logoGradient: "from-emerald-600 to-emerald-900",
+    icon: Factory
   },
   {
     id: "CL-04",
@@ -46,7 +64,8 @@ const clients = [
     unresolvedAnomalies: 1,
     lastSync: "1 day ago",
     monthlyVolume: "$4.2M",
-    logoGradient: "from-purple-700 to-slate-900"
+    logoGradient: "from-purple-600 to-indigo-900",
+    icon: Zap
   },
   {
     id: "CL-05",
@@ -57,7 +76,8 @@ const clients = [
     unresolvedAnomalies: 15,
     lastSync: "2 days ago",
     monthlyVolume: "$1.1M",
-    logoGradient: "from-amber-700 to-slate-900"
+    logoGradient: "from-orange-600 to-red-900",
+    icon: Utensils
   },
   {
     id: "CL-06",
@@ -68,7 +88,8 @@ const clients = [
     unresolvedAnomalies: 0,
     lastSync: "Just now",
     monthlyVolume: "$320K",
-    logoGradient: "from-sky-700 to-slate-900"
+    logoGradient: "from-sky-600 to-blue-900",
+    icon: Terminal
   }
 ];
 
@@ -106,8 +127,15 @@ export default function ClientsPage() {
           >
             <div className="flex items-start justify-between mb-6">
               <div className="flex items-center gap-4">
-                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${client.logoGradient} flex items-center justify-center shadow-lg`}>
-                  <Building2 className="w-6 h-6 text-white/80" />
+                <div className="relative w-12 h-12 group-hover:scale-110 transition-transform duration-300">
+                  {/* Uniform Initial Background */}
+                  <div className="absolute inset-0 rounded-xl bg-slate-800 border border-slate-700/50 flex items-center justify-center shadow-lg">
+                    <client.icon className="w-6 h-6 text-slate-500 group-hover:text-white transition-colors duration-300" />
+                  </div>
+                  {/* Revealed Brand Background */}
+                  <div className={`absolute inset-0 rounded-xl bg-gradient-to-br ${client.logoGradient} opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300 shadow-[0_0_20px_rgba(0,0,0,0.3)]`}>
+                    <client.icon className="w-6 h-6 text-white" />
+                  </div>
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-white group-hover:text-primary transition-colors">{client.name}</h3>
