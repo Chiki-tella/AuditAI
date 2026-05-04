@@ -8,8 +8,8 @@ datasource db {
 
 enum Role {
   ADMIN
-  FIRM_HEAD
-  USER
+  ACCOUNTANT
+  JUNIOR_STAFF
 }
 
 enum SubscriptionStatus {
@@ -68,7 +68,7 @@ model User {
   email         String?   @unique
   emailVerified DateTime? @map("email_verified")
   passwordHash  String?   @map("password_hash")
-  role          Role      @default(USER)
+  role          Role      @default(ACCOUNTANT)
   image         String?
   firmId        String?   @map("firm_id")
   createdAt     DateTime  @default(now()) @map("created_at")

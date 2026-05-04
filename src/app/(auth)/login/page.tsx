@@ -4,13 +4,39 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 
+import { useState } from "react";
+import { signIn } from "next-auth/react";
+
 export default function LoginPage() {
   const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate login and redirect
-    router.push("/dashboard");
+    setError(null);
+    setIsLoading(true);
+
+    try {
+      const result = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+      });
+
+      if (result?.error) {
+        setError("Invalid email or password. Please try again.");
+      } else {
+        router.push("/dashboard");
+        router.refresh();
+      }
+    } catch (err) {
+      setError("Something went wrong. Please try again later.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -25,6 +51,12 @@ export default function LoginPage() {
         </p>
       </div>
 
+      {error && (
+        <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm animate-in fade-in zoom-in duration-300">
+          {error}
+        </div>
+      )}
+
       <form className="space-y-6" onSubmit={handleSubmit}>
         <div>
           <label htmlFor="email" className="block text-sm font-medium text-slate-300">
@@ -37,6 +69,8 @@ export default function LoginPage() {
               type="email"
               autoComplete="email"
               required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="block w-full px-4 py-3 bg-slate-900/50 border border-card-border rounded-xl text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all sm:text-sm"
               placeholder="you@accountingfirm.com"
             />
@@ -61,6 +95,8 @@ export default function LoginPage() {
               type="password"
               autoComplete="current-password"
               required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="block w-full px-4 py-3 bg-slate-900/50 border border-card-border rounded-xl text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all sm:text-sm"
               placeholder="••••••••"
             />
@@ -70,10 +106,17 @@ export default function LoginPage() {
         <div>
           <button
             type="submit"
-            className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-medium text-white bg-primary hover:bg-primary-dark transition-all duration-300 shadow-[0_0_15px_rgba(14,165,233,0.2)] hover:shadow-[0_0_25px_rgba(14,165,233,0.4)]"
+            disabled={isLoading}
+            className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-medium text-white bg-primary hover:bg-primary-dark transition-all duration-300 shadow-[0_0_15px_rgba(14,165,233,0.2)] hover:shadow-[0_0_25px_rgba(14,165,233,0.4)] disabled:opacity-50"
           >
-            Sign in
-            <ArrowRight className="w-4 h-4" />
+            {isLoading ? (
+              <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+            ) : (
+              <>
+                Sign in
+                <ArrowRight className="w-4 h-4" />
+              </>
+            )}
           </button>
         </div>
       </form>
