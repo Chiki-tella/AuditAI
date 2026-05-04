@@ -1,51 +1,118 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
-model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.Text
-  session_state      String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
+enum Role {
+  ADMIN
+  FIRM_HEAD
+  USER
 }
 
-model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+enum SubscriptionStatus {
+  ACTIVE
+  TRIALING
+  PAST_DUE
+  CANCELED
+  INCOMPLETE
+}
+
+enum ReportStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+enum IssueSeverity {
+  CRITICAL
+  WARNING
+  NOTICE
+}
+
+enum AuditAction {
+  LOGIN
+  LOGOUT
+  UPLOAD_FILE
+  GENERATE_REPORT
+  DELETE_REPORT
+  UPDATE_SETTINGS
+}
+
+model Firm {
+  id                 String             @id @default(cuid())
+  name               String
+  email              String             @unique
+  paddleCustomerId   String?            @map("paddle_customer_id")
+  paddleSubId        String?            @unique @map("paddle_sub_id")
+  subscriptionStatus SubscriptionStatus @default(TRIALING) @map("subscription_status")
+  scansUsed          Int                @default(0) @map("scans_used")
+  scansLimit         Int                @default(10) @map("scans_limit")
+  trialEndsAt        DateTime?          @map("trial_ends_at")
+  createdAt          DateTime           @default(now()) @map("created_at")
+  updatedAt          DateTime           @updatedAt @map("updated_at")
+
+  users         User[]
+  clients       Client[]
+  auditLogs     AuditLog[]
+  subscription  Subscription?
+
+  @@map("firms")
 }
 
 model User {
   id            String    @id @default(cuid())
   name          String?
   email         String?   @unique
-  emailVerified DateTime?
+  emailVerified DateTime? @map("email_verified")
+  passwordHash  String?   @map("password_hash")
+  role          Role      @default(USER)
   image         String?
+  firmId        String?   @map("firm_id")
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+
+  firm          Firm?      @relation(fields: [firmId], references: [id])
   accounts      Account[]
   sessions      Session[]
+  reports       Report[]
+  auditLogs     AuditLog[]
+
+  @@map("users")
+}
+
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String  @map("user_id")
+  type               String
+  provider           String
+  providerAccountId  String  @map("provider_account_id")
+  refresh_token      String? @db.Text
+  access_token       String? @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String? @db.Text
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique @map("session_token")
+  userId       String   @map("user_id")
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
 }
 
 model VerificationToken {
@@ -54,4 +121,93 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+model Client {
+  id        String   @id @default(cuid())
+  firmId    String   @map("firm_id")
+  name      String
+  notes     String?  @db.Text
+  software  String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  firm    Firm     @relation(fields: [firmId], references: [id], onDelete: Cascade)
+  reports Report[]
+
+  @@map("clients")
+}
+
+model Report {
+  id            String       @id @default(cuid())
+  clientId      String       @map("client_id")
+  createdBy     String       @map("created_by")
+  period        String
+  status        ReportStatus @default(PENDING)
+  summary       String?      @db.Text
+  criticalCount Int          @default(0) @map("critical_count")
+  warningCount  Int          @default(0) @map("warning_count")
+  noticeCount   Int          @default(0) @map("notice_count")
+  fileName      String       @map("file_name")
+  fileType      String       @map("file_type")
+  createdAt     DateTime     @default(now()) @map("created_at")
+  updatedAt     DateTime     @updatedAt @map("updated_at")
+
+  client    Client     @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  creator   User       @relation(fields: [createdBy], references: [id])
+  issues    Issue[]
+  auditLogs AuditLog[]
+
+  @@map("reports")
+}
+
+model Issue {
+  id          String        @id @default(cuid())
+  reportId    String        @map("report_id")
+  severity    IssueSeverity
+  title       String
+  description String        @db.Text
+  action      String?       @db.Text
+  resolved    Boolean       @default(false)
+  createdAt   DateTime      @default(now()) @map("created_at")
+
+  report Report @relation(fields: [reportId], references: [id], onDelete: Cascade)
+
+  @@map("issues")
+}
+
+model AuditLog {
+  id        String      @id @default(cuid())
+  firmId    String      @map("firm_id")
+  userId    String      @map("user_id")
+  reportId  String?     @map("report_id")
+  action    AuditAction
+  metadata  String?     @db.Text
+  ipAddress String?     @map("ip_address")
+  createdAt DateTime    @default(now()) @map("created_at")
+
+  firm   Firm    @relation(fields: [firmId], references: [id])
+  user   User    @relation(fields: [userId], references: [id])
+  report Report? @relation(fields: [reportId], references: [id])
+
+  @@map("audit_logs")
+}
+
+model Subscription {
+  id                 String             @id @default(cuid())
+  firmId             String             @unique @map("firm_id")
+  paddleSubId        String             @unique @map("paddle_sub_id")
+  paddlePriceId      String             @map("paddle_price_id")
+  status             SubscriptionStatus
+  billingCycleDay    Int                @map("billing_cycle_day")
+  currentPeriodStart DateTime           @map("current_period_start")
+  currentPeriodEnd   DateTime           @map("current_period_end")
+  cancelledAt        DateTime?          @map("cancelled_at")
+  createdAt          DateTime           @default(now()) @map("created_at")
+  updatedAt          DateTime           @updatedAt @map("updated_at")
+
+  firm Firm @relation(fields: [firmId], references: [id], onDelete: Cascade)
+
+  @@map("subscriptions")
 }
