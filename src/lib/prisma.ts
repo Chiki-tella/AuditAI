@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { PrismaClient } from "@prisma/client";
 import { PrismaNeon } from "@prisma/adapter-neon";
 import { Pool, neonConfig } from "@neondatabase/serverless";
@@ -10,10 +11,16 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
-const connectionString = process.env.DATABASE_URL!;
+// Application runtime should use the POOLED URL
+const connectionString = process.env.DATABASE_URL;
+
+if (!connectionString) {
+  console.error("❌ DATABASE_URL is not defined in environment variables!");
+} else {
+  console.log("✅ Database adapter initialized with host: " + new URL(connectionString).host);
+}
 
 const pool = new Pool({ connectionString });
-// We cast to any here because of a slight type mismatch in the current version of the Neon adapter types
 const adapter = new PrismaNeon(pool as any);
 
 export const prisma =
