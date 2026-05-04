@@ -1,68 +1,73 @@
-# AuditAI
+# AuditAI: Professional AI-Powered Financial Auditing
 
-A modern, high-performance landing page and registration flow for **AuditAI**—an AI-powered bookkeeping and auditing platform designed to automate the grunt work of financial reviews.
+AuditAI is a sophisticated, enterprise-grade auditing platform designed for modern accounting firms. It leverages advanced artificial intelligence to automate complex financial reviews, identifying anomalies, duplicates, and compliance risks with precision and speed.
 
-Built with a sleek, professional "Icy Blue" aesthetic, the interface features smooth animations, dynamic bento-grid layouts, and interactive components that convey trust, speed, and cutting-edge artificial intelligence.
+## Core Capabilities
 
-## ✨ Features
+### AI-Driven Transaction Analysis
+Utilizes specialized models to perform deep-pass audits of financial data, identifying high-risk transactions and patterns that traditional manual reviews might overlook.
 
-- **Dynamic Typography & Branding**: Custom "AUDIT AI" swoosh logo and premium typography using Space Grotesk and Satoshi fonts.
-- **Engaging Hero Section**: High-conversion copy paired with subtle glowing gradients and modern dark-mode native styling.
-- **Problem vs. Solution Matrix**: A clear, visually contrasting comparison highlighting the pain points of manual bookkeeping versus the AuditAI advantage.
-- **Interactive Features Bento Grid**: A perfectly interlocked, responsive grid highlighting key capabilities like Duplicate Detection, Anomaly Flagging, and Universal Parsing.
-- **"Live AI" FAQ Section**: Questions don't just expand—the answers dynamically type themselves out to simulate real-time AI generation.
-- **Multi-Step Registration Wizard**: The premium tier "Upgrade" flow utilizes a sleek, 3-step animated wizard (Account -> Secure Payment -> Confirmation) rather than a long, dull scrolling form.
-- **Dark-Reader Locked**: Custom meta-tags ensure the carefully crafted dark theme remains untouched by third-party browser extensions.
+### Multi-Tenant Architecture
+Designed for accounting firms of all sizes. Supports isolated firm management where administrators can oversee multiple clients, team members, and reporting cycles within a secure, unified environment.
 
-## 🛠 Tech Stack
+### Automated Report Generation
+Produces structured, executive-level audit reports with prioritized risk rankings (Audit Red), detailed anomaly descriptions, and recommended actions.
 
-- **Framework**: [Next.js 14+](https://nextjs.org/) (App Router)
-- **Language**: TypeScript
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **Animations**: [Framer Motion](https://www.framer.com/motion/)
-- **Icons**: [Lucide React](https://lucide.dev/)
+### Professional Multi-Step Onboarding
+A refined registration workflow designed for high-end B2B users. Features secure firm account creation and integrated billing workflows for seamless transition from trial to professional tiers.
 
-## 🚀 Getting Started
+## Technical Implementation
 
-First, ensure you have Node.js installed. Then, clone the repository and install the dependencies:
+### Backend Infrastructure
+- **Framework**: Next.js 15+ (App Router)
+- **Database**: Neon (Serverless PostgreSQL)
+- **ORM**: Prisma 7 (with Neon Driver Adapter)
+- **Authentication**: Auth.js (NextAuth) with secure JWT session management and role-based access control (RBAC).
 
-```bash
-# Navigate to the frontend directory
-cd frontend
+### Frontend Standards
+- **Aesthetic**: Custom "Icy Blue" professional palette with high-contrast risk cues.
+- **Styling**: Tailwind CSS with custom design tokens for consistency.
+- **Interactions**: Framer Motion for subtle, purposeful transitions.
+- **Typography**: Space Grotesk and Satoshi (High-legibility professional typefaces).
 
-# Install dependencies
-npm install
-# or
-yarn install
-# or
-pnpm install
-```
+## Infrastructure & Integration
 
-Run the development server:
+### Database Management
+AuditAI utilizes a dual-connection architecture for maximum reliability:
+- **Pooled Connections**: Optimized for low-latency application runtime via Neon's serverless pooler.
+- **Direct Connections**: Dedicated channels for schema migrations and administrative maintenance.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+### Security & Privacy
+- Secure password hashing using bcrypt.
+- Token-based session persistence.
+- Role-based permissions for Admin, Accountant, and Junior Staff tiers.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Development Setup
 
-## 📁 Project Structure
+### Prerequisites
+- Node.js (Latest LTS)
+- PostgreSQL (or Neon account)
 
-The project follows the standard Next.js App Router structure:
-- `src/app/` - Contains the main routing, global CSS, and the root layout.
-  - `(auth)/signup/page.tsx` - The dynamic multi-step registration wizard.
-- `src/components/` - Highly reusable, modular UI components.
-  - `Header.tsx` - Navigation and premium branding.
-  - `HeroSection.tsx` - Primary call to action.
-  - `ProblemSolution.tsx` - The visual contrast section.
-  - `FeaturesBento.tsx` - The interlocking feature grid.
-  - `FaqSection.tsx` - Typewriter-effect FAQs.
-  - `PricingSection.tsx` - Interactive pricing tiers.
+### Installation
+1. Clone the repository.
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Configure environment variables in `.env`:
+   ```env
+   DATABASE_URL="your_pooled_url"
+   DIRECT_URL="your_direct_url"
+   NEXTAUTH_SECRET="your_secret"
+   ```
+4. Synchronize the database schema:
+   ```bash
+   npx prisma db push
+   ```
+5. Initialize the development server:
+   ```bash
+   npm run dev
+   ```
 
-## 🎨 Design Philosophy
-
-The UI is designed to feel like a high-end, reliable B2B SaaS product. By avoiding generic "AI sparkles" and opting for crisp layouts, subtle glowing icy-blue accents (`#0ea5e9`), and sophisticated multi-step interactions, the interface builds immediate trust with professional accounting firms.
+## Design Philosophy
+AuditAI is built on the principle of "Technical Trust." The interface prioritizes clarity, performance, and professional aesthetics over generic trends. By utilizing monochromatic depth and purposeful micro-animations, the platform provides a reliable toolset for high-stakes financial environments.
