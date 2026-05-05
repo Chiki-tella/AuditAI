@@ -23,6 +23,7 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${spaceGrotesk.variable} h-full antialiased`}
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
       <head>

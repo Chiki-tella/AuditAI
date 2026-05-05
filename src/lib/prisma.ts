@@ -1,7 +1,19 @@
+import path from "path";
+import fs from "fs";
+import dotenv from "dotenv";
 import { PrismaClient } from "@prisma/client";
 import { PrismaNeon } from "@prisma/adapter-neon";
 import { Pool, neonConfig } from "@neondatabase/serverless";
 import ws from "ws";
+
+// 1. MANUALLY load .env at the absolute top level to ensure the Prisma engine sees it
+const envPath = path.resolve(process.cwd(), ".env");
+if (fs.existsSync(envPath)) {
+  const envConfig = dotenv.parse(fs.readFileSync(envPath));
+  for (const k in envConfig) {
+    process.env[k] = envConfig[k];
+  }
+}
 
 // Standard setup for Neon serverless
 if (typeof window === "undefined") {
@@ -11,6 +23,7 @@ if (typeof window === "undefined") {
 const connectionString = process.env.DATABASE_URL?.trim();
 
 if (!connectionString) {
+  console.error("❌ DATABASE_URL IS MISSING! Env Path:", envPath);
   throw new Error("❌ DATABASE_URL is missing! Check your .env file and RESTART the server.");
 }
 
@@ -23,7 +36,7 @@ const createPrismaClient = () => {
   
   return new PrismaClient({
     adapter,
-    log: ["error", "warn"], // Minimal logging to see errors clearly
+    log: ["error", "warn"],
   });
 };
 
