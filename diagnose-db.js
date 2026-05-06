@@ -1,8 +1,14 @@
 const { Pool, neonConfig } = require('@neondatabase/serverless');
 const ws = require('ws');
+const { setDefaultAutoSelectFamilyAttemptTimeout } = require('node:net');
 require('dotenv').config();
 
+// Fix for Node.js connection on Windows
+setDefaultAutoSelectFamilyAttemptTimeout(1000);
+
+// Use HTTP fetch instead of WebSockets to bypass network restrictions
 neonConfig.webSocketConstructor = ws;
+neonConfig.useFetchConnection = true;
 
 const connectionString = process.env.DATABASE_URL;
 
@@ -10,6 +16,7 @@ console.log("Connection String:", connectionString ? "Defined (length: " + conne
 
 if (connectionString) {
     console.log("Host:", new URL(connectionString).host);
+    console.log("🛠️  Attempting connection via HTTP Fetch fallback...");
 }
 
 const pool = new Pool({ connectionString });

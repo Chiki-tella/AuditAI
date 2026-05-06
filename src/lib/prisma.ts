@@ -6,6 +6,8 @@ import { PrismaNeon } from "@prisma/adapter-neon";
 import { Pool, neonConfig } from "@neondatabase/serverless";
 import ws from "ws";
 
+import { setDefaultAutoSelectFamilyAttemptTimeout } from "node:net";
+
 // 1. MANUALLY load .env at the absolute top level to ensure the Prisma engine sees it
 const envPath = path.resolve(process.cwd(), ".env");
 if (fs.existsSync(envPath)) {
@@ -15,9 +17,16 @@ if (fs.existsSync(envPath)) {
   }
 }
 
-// Standard setup for Neon serverless
+// 2. Fix Node.js connection issues on Windows (Happy Eyeballs)
+if (typeof window === "undefined") {
+  setDefaultAutoSelectFamilyAttemptTimeout(1000);
+}
+
+// 3. Configure Neon to use HTTP instead of WebSockets if needed
 if (typeof window === "undefined") {
   neonConfig.webSocketConstructor = ws;
+  // Use 'as any' because the property exists at runtime but may be missing in older TS types
+  (neonConfig as any).useFetchConnection = true; 
 }
 
 const connectionString = process.env.DATABASE_URL?.trim();
@@ -28,11 +37,12 @@ if (!connectionString) {
 }
 
 const createPrismaClient = () => {
-  console.log("🛠️  Creating NEW PrismaClient instance...");
+  console.log("🛠️  Initializing Neon Prisma Client...");
   console.log("🔗 Target DB Host:", new URL(connectionString).host);
   
-  const pool = new Pool({ connectionString });
-  const adapter = new PrismaNeon(pool as any);
+  // In Prisma 7, we pass the connectionString directly to the adapter
+  // so it can share the URL with the internal engine.
+  const adapter = new PrismaNeon({ connectionString });
   
   return new PrismaClient({
     adapter,
@@ -40,13 +50,13 @@ const createPrismaClient = () => {
   });
 };
 
-// Use a very specific key to avoid conflicts with other libraries
+// Use a very specific key to avoid conflicts with other libraries or Next.js internals
 const globalForPrisma = globalThis as unknown as {
-  __AUDIT_AI_PRISMA__: PrismaClient | undefined;
+  __AUDIT_AI_PRISMA_INSTANCE__: PrismaClient | undefined;
 };
 
-export const prisma = globalForPrisma.__AUDIT_AI_PRISMA__ ?? createPrismaClient();
+export const prisma = globalForPrisma.__AUDIT_AI_PRISMA_INSTANCE__ ?? createPrismaClient();
 
 if (process.env.NODE_ENV !== "production") {
-  globalForPrisma.__AUDIT_AI_PRISMA__ = prisma;
+  globalForPrisma.__AUDIT_AI_PRISMA_INSTANCE__ = prisma;
 }

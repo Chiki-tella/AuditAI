@@ -3,6 +3,7 @@ import { hash } from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 
 export async function POST(req: Request) {
+  console.log("📝 Registration attempt started...");
   try {
     const { firstName, lastName, email, password, firmName } = await req.json();
 
@@ -67,7 +68,11 @@ export async function POST(req: Request) {
   } catch (error: any) {
     console.error("Registration error:", error);
     return NextResponse.json(
-      { message: "Internal server error" },
+      { 
+        message: "Internal server error", 
+        error: error.message || String(error),
+        code: error.code
+      },
       { status: 500 }
     );
   }

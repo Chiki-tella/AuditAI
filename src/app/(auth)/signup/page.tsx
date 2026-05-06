@@ -49,7 +49,8 @@ function SignupForm() {
         const data = await res.json();
 
         if (!res.ok) {
-          throw new Error(data.message || "Something went wrong");
+          const errorDetail = data.error ? `: ${data.error}` : "";
+          throw new Error((data.message || "Something went wrong") + errorDetail);
         }
 
         // 2. Automatically sign in
