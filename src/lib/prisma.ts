@@ -2,8 +2,8 @@ import path from "path";
 import fs from "fs";
 import dotenv from "dotenv";
 import { PrismaClient } from "@prisma/client";
-import { PrismaNeon } from "@prisma/adapter-neon";
-import { Pool, neonConfig } from "@neondatabase/serverless";
+import { PrismaNeonHttp } from "@prisma/adapter-neon";
+import { neonConfig } from "@neondatabase/serverless";
 import ws from "ws";
 
 import { setDefaultAutoSelectFamilyAttemptTimeout } from "node:net";
@@ -22,11 +22,9 @@ if (typeof window === "undefined") {
   setDefaultAutoSelectFamilyAttemptTimeout(1000);
 }
 
-// 3. Configure Neon to use HTTP instead of WebSockets if needed
+// 3. Configure Neon
 if (typeof window === "undefined") {
   neonConfig.webSocketConstructor = ws;
-  // Use 'as any' because the property exists at runtime but may be missing in older TS types
-  (neonConfig as any).useFetchConnection = true; 
 }
 
 const connectionString = process.env.DATABASE_URL?.trim();
@@ -37,12 +35,15 @@ if (!connectionString) {
 }
 
 const createPrismaClient = () => {
-  console.log("🛠️  Initializing Neon Prisma Client...");
+  console.log("🛠️  Initializing Neon Prisma Client via HTTP...");
   console.log("🔗 Target DB Host:", new URL(connectionString).host);
   
-  // In Prisma 7, we pass the connectionString directly to the adapter
-  // so it can share the URL with the internal engine.
-  const adapter = new PrismaNeon({ connectionString });
+  // Use PrismaNeonHttp to force HTTP Fetch, bypassing all WebSocket firewalls
+  const adapter = new PrismaNeonHttp(connectionString, {
+    fetchOptions: {
+      cache: "no-store",
+    }
+  });
   
   return new PrismaClient({
     adapter,
