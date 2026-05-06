@@ -33,13 +33,13 @@ export async function POST(req: Request) {
     // 4. Create Firm and User in a transaction (FR-03)
     // This ensures both are created successfully, or neither is.
     const result = await prisma.$transaction(async (tx) => {
-      // Create the Firm
       const firm = await tx.firm.create({
         data: {
           name: firmName,
           email: email, // Use owner's email as firm contact initially
           subscriptionStatus: "TRIALING",
-          scansLimit: 10,
+          scansUsed: 0,
+          scansLimit: 3,
         },
       });
 
