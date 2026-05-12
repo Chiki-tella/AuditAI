@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { prisma } from '@/lib/db/prisma';
-import { getSession } from '@/lib/auth/session';
+import { auth } from '@/lib/auth/session';
 
 export async function GET(req: NextRequest) {
   try {
-    const session = await getSession();
+    const session = await auth();
     if (!session?.user) {
       return NextResponse.json({ error: "Unauthorized", code: "UNAUTHORIZED" }, { status: 401 });
     }
@@ -46,7 +46,7 @@ const CreateClientSchema = z.object({
 
 export async function POST(req: NextRequest) {
   try {
-    const session = await getSession();
+    const session = await auth();
     if (!session?.user || (session.user as any).role === 'JUNIOR') {
       return NextResponse.json({ error: "Forbidden", code: "FORBIDDEN" }, { status: 403 });
     }
@@ -61,14 +61,14 @@ export async function POST(req: NextRequest) {
     const client = await prisma.client.create({
       data: {
         name: parsed.data.name,
-        firmId: (session.user as any).firmId
+        firmId: (session.user as any).firmId as string
       }
     });
     
     await prisma.auditLog.create({
       data: {
-        firmId: (session.user as any).firmId,
-        userId: session.user.id,
+        firmId: (session.user as any).firmId as string,
+        userId: session.user.id as string,
         action: 'CREATE_CLIENT',
         metadata: { clientId: client.id },
         ipAddress: req.headers.get('x-forwarded-for') || '127.0.0.1'

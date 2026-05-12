@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db/prisma';
-import { getSession } from '@/lib/auth/session';
+import { auth } from '@/lib/auth/session';
 import { runAuditEngine } from '@/lib/audit/engine';
 
 const RunSchema = z.object({
@@ -19,7 +19,7 @@ const RunSchema = z.object({
 
 export async function POST(req: NextRequest) {
   try {
-    const session = await getSession();
+    const session = await auth();
     if (!session?.user || (session.user as any).role === 'JUNIOR') {
       return NextResponse.json({ error: "Forbidden", code: "FORBIDDEN" }, { status: 403 });
     }
@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
       data: {
         clientId,
         firmId,
-        createdById: session.user.id,
+        createdById: session.user.id as string,
         period,
         status: 'PROCESSING',
         totalIssues: 0,
@@ -73,7 +73,7 @@ export async function POST(req: NextRequest) {
     await prisma.auditLog.create({
       data: {
         firmId,
-        userId: session.user.id,
+        userId: session.user.id as string,
         action: 'INITIATE_SCAN',
         metadata: { reportId: report.id },
         ipAddress: req.headers.get('x-forwarded-for') || '127.0.0.1'

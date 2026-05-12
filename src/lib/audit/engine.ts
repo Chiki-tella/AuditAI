@@ -43,8 +43,7 @@ export async function runAuditEngine(
           max_tokens: 1500,
           system: stage2.systemPrompt,
           messages: [{ role: 'user', content: stage2.payload }],
-          timeout: 10000,
-        });
+        }, { timeout: 10000 });
         claudeResponseStr = (msg.content[0] as any).text || '';
         break;
       } catch (err: any) {
@@ -125,7 +124,7 @@ export async function runAuditEngine(
         await sendEmail({
           to: report.createdBy.email,
           subject: 'Scan Complete',
-          html: \`<p>Report for \${report.client.name} is ready.</p>\`
+          html: `<p>Report for ${report.client.name} is ready.</p>`
         });
       }
     }

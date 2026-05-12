@@ -1,5 +1,5 @@
-import { auth } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
+import { auth } from "@/lib/auth/session";
+import { prisma } from "@/lib/db/prisma";
 import { redirect } from "next/navigation";
 import UploadClient from "./UploadClient";
 import Link from "next/link";
@@ -20,6 +20,7 @@ export default async function UploadPage() {
   try {
     firm = await prisma.firm.findUnique({
       where: { id: firmId },
+      include: { subscription: true }
     });
   } catch (error) {
     console.error("Upload page DB error:", error);
@@ -35,7 +36,7 @@ export default async function UploadPage() {
     return <div className="p-8 text-center text-slate-400 mt-20">Error loading firm details.</div>;
   }
 
-  const isFree = firm.subscriptionStatus === "TRIALING";
+  const isFree = !firm.subscription || firm.subscription.status !== "ACTIVE";
   const limitReached = firm.scansUsed >= firm.scansLimit;
 
   // Paywall enforcement

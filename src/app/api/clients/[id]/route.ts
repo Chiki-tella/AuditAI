@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db/prisma';
-import { getSession } from '@/lib/auth/session';
+import { auth } from '@/lib/auth/session';
 
 export async function DELETE(req: NextRequest, props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
   try {
-    const session = await getSession();
+    const session = await auth();
     if (!session?.user || (session.user as any).role !== 'ADMIN') {
       return NextResponse.json({ error: "Forbidden", code: "FORBIDDEN" }, { status: 403 });
     }
@@ -33,8 +33,8 @@ export async function DELETE(req: NextRequest, props: { params: Promise<{ id: st
 
     await prisma.auditLog.create({
       data: {
-        firmId: (session.user as any).firmId,
-        userId: session.user.id,
+        firmId: (session.user as any).firmId as string,
+        userId: session.user.id as string,
         action: 'DELETE_CLIENT',
         metadata: { clientId: params.id },
         ipAddress: req.headers.get('x-forwarded-for') || '127.0.0.1'

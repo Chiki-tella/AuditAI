@@ -1,5 +1,5 @@
-import { auth } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
+import { auth } from "@/lib/auth/session";
+import { prisma } from "@/lib/db/prisma";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { 
@@ -39,6 +39,7 @@ export default async function DashboardPage() {
   try {
     firm = await prisma.firm.findUnique({
       where: { id: firmId },
+      include: { subscription: true }
     });
 
     if (!firm) {
@@ -72,7 +73,7 @@ export default async function DashboardPage() {
     );
   }
 
-  const isFree = firm.subscriptionStatus === "TRIALING";
+  const isFree = !firm.subscription || firm.subscription.status !== "ACTIVE";
   const limitReached = firm.scansUsed >= firm.scansLimit;
 
   return (

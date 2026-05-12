@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db/prisma';
-import { getSession } from '@/lib/auth/session';
+import { auth } from '@/lib/auth/session';
 import { unstable_cache } from 'next/cache';
 
 const getCachedBillingStatus = unstable_cache(
@@ -16,7 +16,7 @@ const getCachedBillingStatus = unstable_cache(
 
 export async function GET(req: NextRequest) {
   try {
-    const session = await getSession();
+    const session = await auth();
     if (!session?.user || (session.user as any).role !== 'ADMIN') {
       return NextResponse.json({ error: "Forbidden", code: "FORBIDDEN" }, { status: 403 });
     }
