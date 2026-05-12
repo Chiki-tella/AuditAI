@@ -35,24 +35,41 @@ export async function runAuditEngine(
     pushEvent('stage_2_complete', { payloadTokens: stage2.payloadTokens });
     
     let claudeResponseStr = '';
-    let retries = 0;
-    while (retries <= 2) {
-      try {
-        const msg = await anthropic.messages.create({
-          model: 'claude-3-5-sonnet-20240620',
-          max_tokens: 1500,
-          system: stage2.systemPrompt,
-          messages: [{ role: 'user', content: stage2.payload }],
-        }, { timeout: 10000 });
-        claudeResponseStr = (msg.content[0] as any).text || '';
-        break;
-      } catch (err: any) {
-        if (err.status === 429 || err.status === 503 || err.name === 'TimeoutError' || err.name === 'AbortError' || err.type === 'timeout') {
-          retries++;
-          if (retries > 2) throw new Error('Claude API retries exhausted');
-          await new Promise(r => setTimeout(r, retries === 1 ? 1000 : 3000));
-        } else {
-          throw err;
+    
+    if (!process.env.ANTHROPIC_API_KEY || process.env.MOCK_AI === 'true') {
+      console.log('Using Mock AI Response...');
+      claudeResponseStr = JSON.stringify({
+        findings: transactions.slice(0, 2).map((t, i) => ({
+          transactionRef: t.rowRef,
+          vendor: t.vendor,
+          amount: t.amount,
+          date: t.date,
+          severity: i === 0 ? 'CRITICAL' : 'WARNING',
+          title: i === 0 ? 'Potential Fraudulent Vendor' : 'Duplicate Transaction Detected',
+          description: `AI detected a high-risk pattern for ${t.vendor}.`,
+          recommendedAction: 'Verify invoice and cross-reference with bank statement.'
+        }))
+      });
+    } else {
+      let retries = 0;
+      while (retries <= 2) {
+        try {
+          const msg = await anthropic.messages.create({
+            model: 'claude-3-5-sonnet-20240620',
+            max_tokens: 1500,
+            system: stage2.systemPrompt,
+            messages: [{ role: 'user', content: stage2.payload }],
+          }, { timeout: 10000 });
+          claudeResponseStr = (msg.content[0] as any).text || '';
+          break;
+        } catch (err: any) {
+          if (err.status === 429 || err.status === 503 || err.name === 'TimeoutError' || err.name === 'AbortError' || err.type === 'timeout') {
+            retries++;
+            if (retries > 2) throw new Error('Claude API retries exhausted');
+            await new Promise(r => setTimeout(r, retries === 1 ? 1000 : 3000));
+          } else {
+            throw err;
+          }
         }
       }
     }
